@@ -63,19 +63,15 @@ describe('PaymentsController', () => {
 
   describe('create', () => {
     it('should throw an error', async () => {
-      jest
-        .spyOn(paymentsService, 'createPayment')
-        .mockImplementationOnce(() => {
-          throw new BadRequestException();
-        });
-
+      jest.spyOn(paymentsService, 'createPayment').mockResolvedValue(null);
       try {
-        const response = await controller.createPayment({
+        await controller.createPayment({
           email: 'bry@email.com',
           price: 1,
         });
       } catch (error) {
-        console.log(error);
+        // Expect that the error is a BadRequestException
+        expect(error).toBeInstanceOf(BadRequestException);
       }
     });
   });

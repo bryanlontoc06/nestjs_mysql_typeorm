@@ -19,13 +19,13 @@ export class PaymentsService {
     const { email } = createPaymentDto;
     const user = this.users.find((user) => user.email === email);
 
-    if (user) {
-      return {
-        id: 1,
-        status: 'success',
-      };
-    } else {
+    if (!user) {
       throw new BadRequestException();
     }
+
+    return {
+      id: 1,
+      status: 'success',
+    };
   }
 }
